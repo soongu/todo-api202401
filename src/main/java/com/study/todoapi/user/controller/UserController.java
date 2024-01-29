@@ -17,6 +17,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @Slf4j
@@ -30,11 +31,14 @@ public class UserController {
     // 회원가입 요청처리
     @PostMapping
     public ResponseEntity<?> signUp(
-            @Validated @RequestBody UserSignUpRequestDTO dto
+            @Validated @RequestPart("user") UserSignUpRequestDTO dto
+            , @RequestPart("profileImage") MultipartFile profileImg
             , BindingResult result
     ) {
 
         log.info("/api/auth POST! - {}", dto);
+
+        if (profileImg != null) log.info("file-name: {}", profileImg.getOriginalFilename());
 
         if (result.hasErrors()) {
             log.warn(result.toString());
@@ -85,12 +89,11 @@ public class UserController {
     @PutMapping("/promote")
     // 그냥 이 권한을 가진 사람만 이 요청을 수행할수 있고
     // 이 권한이 아닌 유저는 강제로 403이 응답됨
-    @PreAuthorize("hasRole('ROLE_COMMON')")
-//    @PreAuthorize("hasRole('ROLE_COMMON') or hasRole('ROLE_ADMIN')")
+//    @PreAuthorize("hasRole('COMMON')")
     public ResponseEntity<?> promote(
             @AuthenticationPrincipal TokenUserInfo userInfo
             ) {
-        log.info("/api/auth/promote PUT!");
+        log.info("/api/auth/promote PUT! - {}", userInfo);
 
         try {
             LoginResponseDTO responseDTO = userService.promoteToPremium(userInfo);

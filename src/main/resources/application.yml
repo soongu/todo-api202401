@@ -39,7 +39,7 @@ upload:
 # s3 setting
 aws:
   credentials:
-    accessKey: AKIAWFGAQ3PXJHQN57VW
-    secretKey: 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
+    accessKey:
+    secretKey:
   region: ap-northeast-2
   bucketName: spring-todo-api-file-bucket9984

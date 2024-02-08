@@ -1,12 +1,12 @@
 server:
-  port: 8484
+  port: 80
 
 spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url:  # jdbc url을 적으세요
-    username: # 데이베이스 사용자 계정명을 적으세요
-    password: mariadb
+    url: jdbc:mariadb://spring-database.cbcszxd0fody.ap-northeast-2.rds.amazonaws.com:3306/spring
+    username: root
+    password: mariadb1
   jpa:
     # SQL??? ?? ? ?? DBMS? ???? ??? ????
     database-platform: org.hibernate.dialect.MariaDB106Dialect
@@ -39,7 +39,7 @@ upload:
 # s3 setting
 aws:
   credentials:
-    accessKey:
-    secretKey:
+    accessKey: AKIAWFGAQ3PXJHQN57VW
+    secretKey: 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
   region: ap-northeast-2
   bucketName: spring-todo-api-file-bucket9984
